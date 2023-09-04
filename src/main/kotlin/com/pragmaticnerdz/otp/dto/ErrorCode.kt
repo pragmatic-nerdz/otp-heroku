@@ -1,8 +1,7 @@
 package com.pragmaticnerdz.otp.dto
 
-
-enum class ErrorCode{
+enum class ErrorCode {
     NONE,
     INVALID,
-    EXPIRED
+    EXPIRED,
 }
