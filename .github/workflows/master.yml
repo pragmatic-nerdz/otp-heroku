@@ -1,0 +1,48 @@
+name: otp-heroku-master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Setup the environment
+      #  - Setup JDK 17
+      #  - Setup Heroku CLI
+      - uses: actions/checkout@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku plugins:install @heroku-cli/plugin-java
+
+      # Build step: Build the application. This step produces the artifact target/otp-heroku.jar
+      - name: Build
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          mvn install
+
+      # Deploy step: Deploys the application to Heroku
+      - name: Deploy
+        env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+          HEROKU_APP: opt-heroku-test
+        run: |
+          echo '>>> Creating the app: ${HEROKU_APP}'
+          heroku apps | grep ${HEROKU_APP} && echo 'app: ${HEROKU_APP} exists' ||  heroku apps:create ${HEROKU_APP}
+          heroku buildpacks:clear --app ${HEROKU_APP}
+          heroku buildpacks:add heroku/jvm --app ${HEROKU_APP}
+          echo '>>> Install Heroku adds-on'
+          heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
+          echo '>>> Deploying JAR file'
+          heroku deploy:jar target/otp-heroku.jar --app ${HEROKU_APP}
