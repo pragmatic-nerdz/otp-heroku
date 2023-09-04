@@ -44,5 +44,8 @@ jobs:
           heroku buildpacks:add heroku/jvm --app ${HEROKU_APP}
           echo '>>> Install Heroku adds-on'
           heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
+          heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: rediscloud exists' ||  heroku addons:create rediscloud -a ${HEROKU_APP}
+          heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: cloudamqp exists' ||  heroku addons:create cloudamqp -a ${HEROKU_APP}
+          heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: sendgrid exists' ||  heroku addons:create sendgrid -a ${HEROKU_APP}
           echo '>>> Deploying JAR file'
           heroku deploy:jar target/otp-heroku.jar --app ${HEROKU_APP}
