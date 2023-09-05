@@ -18,6 +18,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 6379:6379
 
     steps:
       # Setup the environment
@@ -39,8 +41,6 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          REDIS_HOST: localhost
-          REDIS_PORT: 6379
         run: |
           mvn install
 
