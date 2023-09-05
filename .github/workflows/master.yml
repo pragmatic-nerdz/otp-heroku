@@ -39,6 +39,8 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
         run: |
           mvn install
 
