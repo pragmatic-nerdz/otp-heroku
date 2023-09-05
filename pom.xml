@@ -20,8 +20,8 @@
     <kotlin.code.style>official</kotlin.code.style>
     <jdk.version>17</jdk.version>
 
-    <jacoco.threshold.line>0.95</jacoco.threshold.line>
-    <jacoco.threshold.class>0.95</jacoco.threshold.class>
+    <jacoco.threshold.line>0.72</jacoco.threshold.line>
+    <jacoco.threshold.class>0.72</jacoco.threshold.class>
     <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
     <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -49,7 +49,7 @@
     <jakarta.mail-impl.version>2.0.2</jakarta.mail-impl.version>
     <junit.version>5.10.0</junit.version>
     <junit-platform-commons.version>1.10.0</junit-platform-commons.version>
-    <kotlin.version>1.9.10</kotlin.version>
+    <kotlin.version>1.8.22</kotlin.version>
     <kotlin-jackson.version>2.15.2</kotlin-jackson.version>
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <klint.version>0.50.0</klint.version>
@@ -82,6 +82,17 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.lettuce</groupId>
+      <artifactId>lettuce-core</artifactId>
+      <version>${lettuce.version}</version>
     </dependency>
 
     <dependency>

@@ -42,6 +42,8 @@ jobs:
           heroku apps | grep ${HEROKU_APP} && echo 'app: ${HEROKU_APP} exists' ||  heroku apps:create ${HEROKU_APP}
           heroku buildpacks:clear --app ${HEROKU_APP}
           heroku buildpacks:add heroku/jvm --app ${HEROKU_APP}
+          echo '>>> Setting up environment variables'
+          heroku config:set --app ${HEROKU_APP} APP_PROFILE=test
           echo '>>> Installing Heroku adds-on'
           heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
           heroku addons -a ${HEROKU_APP} | grep rediscloud && echo 'addon: rediscloud exists' ||  heroku addons:create rediscloud -a ${HEROKU_APP}
