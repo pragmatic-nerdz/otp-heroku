@@ -4,6 +4,7 @@ otp:
     mail:
       mailgun:
         api-key: ${MAILGUN_API_KEY}
+        domain: ${MAILGUN_DOMAIN}
     persistence:
       redis:
         url: ${REDISCLOUD_URL}

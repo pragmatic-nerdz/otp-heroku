@@ -55,3 +55,4 @@ otp:
     mail:
       mailgun:
         api-key: "---"
+        domain: "domain"
