@@ -1,5 +1,5 @@
 otp:
-  server-url: ${WEB_URL}
+  server-url: ${SERVER_URL}
   resources:
     persistence:
       redis:
