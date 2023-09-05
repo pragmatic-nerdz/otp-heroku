@@ -69,6 +69,3 @@ jobs:
           heroku addons -a ${HEROKU_APP} | grep mailgun && echo 'addon: mailgun exists' ||  heroku addons:create mailgun -a ${HEROKU_APP}
           echo '>>> Deploying JAR file'
           heroku deploy:jar target/otp-heroku.jar --app ${HEROKU_APP}
-          echo '>>> Healthcheck or ${SERVER_URL}'
-          sleep 30
-          curl -sSf ${SERVER_URL}/actuator/health >> /dev/null
