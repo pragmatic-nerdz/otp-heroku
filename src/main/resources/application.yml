@@ -44,3 +44,9 @@ otp:
     persistence:
       redis:
         url: redis://localhost:6379
+    queue:
+      rabbitmq:
+        url: amqp://localhost
+    mail:
+      mailgun:
+        api-key: "---"

@@ -20,6 +20,10 @@ jobs:
           --health-retries 5
         ports:
           - 6379:6379
+      rabbitmq:
+        image: rabbitmq
+        ports:
+          - 5672:5672
 
     steps:
       # Setup the environment
@@ -60,6 +64,6 @@ jobs:
           heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
           heroku addons -a ${HEROKU_APP} | grep rediscloud && echo 'addon: rediscloud exists' ||  heroku addons:create rediscloud -a ${HEROKU_APP}
           heroku addons -a ${HEROKU_APP} | grep cloudamqp && echo 'addon: cloudamqp exists' ||  heroku addons:create cloudamqp -a ${HEROKU_APP}
-          heroku addons -a ${HEROKU_APP} | grep sendgrid && echo 'addon: sendgrid exists' ||  heroku addons:create sendgrid -a ${HEROKU_APP}
+          heroku addons -a ${HEROKU_APP} | grep mailgun && echo 'addon: mailgun exists' ||  heroku addons:create mailgun -a ${HEROKU_APP}
           echo '>>> Deploying JAR file'
           heroku deploy:jar target/otp-heroku.jar --app ${HEROKU_APP}

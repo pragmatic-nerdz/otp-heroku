@@ -3,3 +3,6 @@ otp:
     persistence:
       redis:
         url: ${REDISCLOUD_URL}
+    queue:
+      rabbitmq:
+        url: ${CLOUDAMQP_URL}
