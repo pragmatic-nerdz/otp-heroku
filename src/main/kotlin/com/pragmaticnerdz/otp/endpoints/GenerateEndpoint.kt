@@ -6,7 +6,7 @@ import com.pragmaticnerdz.otp.dto.GenerateOtpResponse
 import com.pragmaticnerdz.otp.resource.persistence.OtpEntity
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
 import com.pragmaticnerdz.otp.resource.queue.PasswordGeneratedEvent
-import com.pragmaticnerdz.otp.service.SenderService
+import com.pragmaticnerdz.otp.resource.queue.rabbitmq.RabbitMQConfiguration
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.web.bind.annotation.PostMapping
@@ -50,7 +50,7 @@ class GenerateEndpoint(
             password = otp.password,
         )
         rabbit.convertAndSend(
-            SenderService.QUEUE,
+            RabbitMQConfiguration.QUEUE,
             ObjectMapper().writeValueAsString(event),
         )
     }

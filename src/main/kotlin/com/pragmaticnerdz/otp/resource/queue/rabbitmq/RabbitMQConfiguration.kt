@@ -21,6 +21,10 @@ class RabbitMQConfiguration(
     @Value("\${otp.resources.queue.rabbitmq.url}") private val url: String,
     private val sender: SenderService,
 ) {
+    companion object {
+        const val QUEUE = "otp-queue"
+    }
+
     @Bean
     fun connectionFactory(): CachingConnectionFactory =
         CachingConnectionFactory(URI(url))
@@ -35,9 +39,9 @@ class RabbitMQConfiguration(
 
     @Bean
     fun senderQueue(): Queue =
-        Queue(SenderService.QUEUE)
+        Queue(QUEUE)
 
-    @RabbitListener(queues = [SenderService.QUEUE])
+    @RabbitListener(queues = [QUEUE])
     fun onPasswordGenerated(payload: String) {
         val mapper = ObjectMapper()
         val event = mapper.readValue(payload, PasswordGeneratedEvent::class.java)

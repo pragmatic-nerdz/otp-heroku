@@ -2,7 +2,7 @@ package com.pragmaticnerdz.otp.resource.mail.mailgun
 
 import com.mailgun.api.v3.MailgunMessagesApi
 import com.mailgun.client.MailgunClient
-import com.pragmaticnerdz.otp.resource.mail.MailResource
+import com.pragmaticnerdz.otp.resource.mail.EmailSenderResource
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -14,7 +14,7 @@ class MailgunConfiguration(
     @Value("\${otp.resources.mail.mailgun.api-key}") private val apiKey: String,
 ) {
     companion object {
-        private val LOGGER = LoggerFactory.getLogger(MailgunMailResource::class.java)
+        private val LOGGER = LoggerFactory.getLogger(MailgunResource::class.java)
     }
 
     @Bean
@@ -24,11 +24,11 @@ class MailgunConfiguration(
             .createApi(MailgunMessagesApi::class.java)
 
     @Bean
-    fun mailService(): MailResource {
+    fun mailService(): EmailSenderResource {
         val domain = getDomainName()
         LOGGER.info("Initializing MailService with domain=$domain")
 
-        return MailgunMailResource(mailgunApi(), domain)
+        return MailgunResource(mailgunApi(), domain)
     }
 
     private fun getDomainName(): String =
