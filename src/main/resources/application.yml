@@ -40,6 +40,7 @@ logging:
     file: "%d Type=%level Logger=%c Thread=%thread %m%n"
 
 otp:
+  server-url: http://localhost:8080
   resources:
     persistence:
       redis:
