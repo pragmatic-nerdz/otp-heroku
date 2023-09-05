@@ -1,6 +1,9 @@
 otp:
   server-url: ${SERVER_URL}
   resources:
+    mail:
+      mailgun:
+        api-key: ${MAILGUN_API_KEY}
     persistence:
       redis:
         url: ${REDISCLOUD_URL}
