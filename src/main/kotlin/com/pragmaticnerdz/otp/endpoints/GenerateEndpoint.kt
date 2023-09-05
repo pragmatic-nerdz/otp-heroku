@@ -3,10 +3,10 @@ package com.pragmaticnerdz.otp.endpoints
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.pragmaticnerdz.otp.dto.GenerateOtpRequest
 import com.pragmaticnerdz.otp.dto.GenerateOtpResponse
+import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
+import com.pragmaticnerdz.otp.resource.mq.rabbitmq.RabbitMQConfiguration
 import com.pragmaticnerdz.otp.resource.persistence.OtpEntity
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
-import com.pragmaticnerdz.otp.resource.queue.PasswordGeneratedEvent
-import com.pragmaticnerdz.otp.resource.queue.rabbitmq.RabbitMQConfiguration
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.web.bind.annotation.PostMapping

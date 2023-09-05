@@ -1,7 +1,7 @@
-package com.pragmaticnerdz.otp.resource.queue.rabbitmq
+package com.pragmaticnerdz.otp.resource.mq.rabbitmq
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.pragmaticnerdz.otp.resource.queue.PasswordGeneratedEvent
+import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
 import com.pragmaticnerdz.otp.service.SenderService
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.annotation.RabbitListener

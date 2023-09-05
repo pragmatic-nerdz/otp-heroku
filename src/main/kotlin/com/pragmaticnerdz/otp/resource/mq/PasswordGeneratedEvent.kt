@@ -1,4 +1,4 @@
-package com.pragmaticnerdz.otp.resource.queue
+package com.pragmaticnerdz.otp.resource.mq
 
 import com.pragmaticnerdz.otp.dto.OtpType
 

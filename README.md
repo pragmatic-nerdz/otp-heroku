@@ -9,14 +9,27 @@
 
 One-Time-Password API.
 
-# Prerequisites
+# Setup your local environment
 
+## Installations
+
+- Install [Maven](https://maven.apache.org/install.html)
 - Install [Redis](https://redis.io/docs/getting-started/installation/)
 - Install [RabbitMQ](https://www.rabbitmq.com/download.html)
 
-# Setup your local environment
+## Build
 
-TODO
+```
+mvn clean install
+```
+
+## Run the server
+
+```
+mvn spring-boot:run
+```
+
+Browse the [API](http://localhost:8080/swagger-ui.html)
 
 # Deployment to Heroku
 
