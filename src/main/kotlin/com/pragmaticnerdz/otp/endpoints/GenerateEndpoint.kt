@@ -16,7 +16,7 @@ import java.util.UUID
 class GenerateEndpoint(
     private val otpRepository: OtpRepository,
 ) {
-    companion object{
+    companion object {
         private val LOGGER = LoggerFactory.getLogger(GenerateEndpoint::class.java)
     }
 

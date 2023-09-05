@@ -1,5 +1,5 @@
 package com.pragmaticnerdz.otp.dto
 
-data class ValidateOtpRequest(
+data class VerifyOtpRequest(
     val password: String = "",
 )
