@@ -54,4 +54,17 @@ internal class GenerateEndpointTest {
         assertEquals(6, message.firstValue.text.length)
         assertTrue(message.firstValue.to.contains(request.address))
     }
+
+    @Test
+    fun generateSmsOtp() {
+        // WHEN
+        val request = GenerateOtpRequest(
+            type = OtpType.SMS,
+            address = "+237655000000",
+        )
+        val response = rest.postForEntity("/otp", request, GenerateOtpResponse::class.java)
+
+        // THEN
+        assertEquals(HttpStatus.OK, response.statusCode)
+    }
 }
