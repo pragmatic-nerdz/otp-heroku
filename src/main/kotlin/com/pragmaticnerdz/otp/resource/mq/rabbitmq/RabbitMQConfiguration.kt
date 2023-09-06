@@ -1,7 +1,7 @@
 package com.pragmaticnerdz.otp.resource.mq.rabbitmq
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.pragmaticnerdz.otp.Sender
+import com.pragmaticnerdz.otp.SenderConsumer
 import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -19,7 +19,7 @@ import java.net.URI
 @Configuration
 class RabbitMQConfiguration(
     @Value("\${otp.resources.queue.rabbitmq.url}") private val url: String,
-    private val sender: Sender,
+    private val sender: SenderConsumer,
 ) {
     companion object {
         const val QUEUE = "otp-queue"

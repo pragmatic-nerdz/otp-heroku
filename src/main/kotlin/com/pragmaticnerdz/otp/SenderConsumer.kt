@@ -7,7 +7,7 @@ import com.pragmaticnerdz.otp.resource.sms.SmsSenderResource
 import org.springframework.stereotype.Service
 
 @Service
-class Sender(
+class SenderConsumer(
     private val emailResource: EmailSenderResource,
     private val smsResource: SmsSenderResource,
 ) {
