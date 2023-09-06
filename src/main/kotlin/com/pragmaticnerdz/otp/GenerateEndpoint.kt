@@ -1,4 +1,4 @@
-package com.pragmaticnerdz.otp.endpoints
+package com.pragmaticnerdz.otp
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.pragmaticnerdz.otp.dto.GenerateOtpRequest
@@ -18,8 +18,8 @@ import java.util.UUID
 @RestController
 @RequestMapping
 class GenerateEndpoint(
-    private val otpRepository: OtpRepository,
-    private val rabbit: RabbitTemplate,
+    private val db: OtpRepository,
+    private val mq: RabbitTemplate,
 ) {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(GenerateEndpoint::class.java)
@@ -31,12 +31,13 @@ class GenerateEndpoint(
         passwordGenerated(request, otp)
 
         val response = GenerateOtpResponse(otpUuid = otp.uuid)
+
         log(request, response)
         return response
     }
 
     private fun generateOtp() =
-        otpRepository.save(
+        db.save(
             OtpEntity(
                 uuid = UUID.randomUUID().toString(),
                 password = (1000000 * Math.random()).toInt(),
@@ -47,15 +48,25 @@ class GenerateEndpoint(
         val event = PasswordGeneratedEvent(
             type = request.type,
             address = request.address,
-            password = otp.password,
+            password = formatPassword(otp.password, 6),
         )
-        rabbit.convertAndSend(
+        mq.convertAndSend(
             RabbitMQConfiguration.QUEUE,
             ObjectMapper().writeValueAsString(event),
         )
     }
 
+    private fun formatPassword(password: Int, maxLength: Int): String {
+        val str = password.toString()
+        val length = str.length
+        return if (length < maxLength) {
+            "0".repeat(maxLength - length) + str
+        } else {
+            str
+        }
+    }
+
     private fun log(request: GenerateOtpRequest, response: GenerateOtpResponse) {
-        LOGGER.info("endpoint=/opt request_address=${request.address} request_type=${request.type} response_opt_uuid=${response.otpUuid}")
+        LOGGER.info("endpoint=/otp request_address=${request.address} request_type=${request.type} response_otp_uuid=${response.otpUuid}")
     }
 }

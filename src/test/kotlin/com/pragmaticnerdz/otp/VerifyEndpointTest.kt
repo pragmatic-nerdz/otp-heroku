@@ -1,4 +1,4 @@
-package com.pragmaticnerdz.otp.endpoints
+package com.pragmaticnerdz.otp
 
 import com.pragmaticnerdz.otp.dto.ErrorCode
 import com.pragmaticnerdz.otp.dto.VerifyOtpRequest
