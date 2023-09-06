@@ -3,8 +3,6 @@ package com.pragmaticnerdz.otp.resource.mq.rabbitmq
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.pragmaticnerdz.otp.Sender
 import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
-import feign.FeignException
-import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
@@ -25,7 +23,6 @@ class RabbitMQConfiguration(
 ) {
     companion object {
         const val QUEUE = "otp-queue"
-        private val LOGGER = LoggerFactory.getLogger(RabbitMQConfiguration::class.java)
     }
 
     @Bean
@@ -46,14 +43,8 @@ class RabbitMQConfiguration(
 
     @RabbitListener(queues = [QUEUE])
     fun onPasswordGenerated(payload: String) {
-        try {
-            val mapper = ObjectMapper()
-            val event = mapper.readValue(payload, PasswordGeneratedEvent::class.java)
-            sender.send(event.type, event.address, event.password)
-        } catch (ex: FeignException.TooManyRequests) {
-            LOGGER.warn("Email server no longer available", ex)
-        } catch (ex: FeignException.Unauthorized) {
-            LOGGER.warn("Authentication error", ex)
-        }
+        val mapper = ObjectMapper()
+        val event = mapper.readValue(payload, PasswordGeneratedEvent::class.java)
+        sender.send(event.type, event.address, event.password)
     }
 }
