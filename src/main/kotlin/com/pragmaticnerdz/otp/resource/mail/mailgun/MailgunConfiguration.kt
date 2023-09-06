@@ -18,6 +18,7 @@ class MailgunConfiguration(
             .config(apiKey)
             .createApi(MailgunMessagesApi::class.java)
 
+    @Bean
     fun emailSenderResource(): EmailSenderResource =
         MailgunResource(mailgunApi(), domain)
 }
