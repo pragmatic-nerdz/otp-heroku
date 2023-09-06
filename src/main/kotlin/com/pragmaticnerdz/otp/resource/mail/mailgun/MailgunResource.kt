@@ -15,6 +15,7 @@ class MailgunResource(
     }
 
     override fun send(address: String, password: String) {
+        LOGGER.info("Sending password to $address")
         try {
             val message = Message.builder()
                 .from("pragmatic.nerdz@gmail.com")
@@ -23,10 +24,19 @@ class MailgunResource(
                 .text(password)
                 .build()
             api.sendMessage(domain, message)
-        } catch (ex: FeignException.TooManyRequests) {
-            LOGGER.warn("Email server no longer available", ex)
-        } catch (ex: FeignException.Unauthorized) {
-            LOGGER.warn("Authentication error", ex)
+        } catch (ex: Exception) {
+            when (ex) {
+                is FeignException.TooManyRequests,
+                is FeignException.Unauthorized,
+                is FeignException.Forbidden,
+                -> {
+                    LOGGER.warn("Email server no longer available", ex)
+                }
+                else -> {
+                    LOGGER.error("Delivery failure", ex)
+                    throw ex
+                }
+            }
         }
     }
 }
