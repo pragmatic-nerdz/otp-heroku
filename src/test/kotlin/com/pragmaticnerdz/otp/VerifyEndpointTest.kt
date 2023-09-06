@@ -53,7 +53,7 @@ internal class VerifyEndpointTest {
         val response = rest.postForEntity("/otp/$uuid/verify", request, VerifyOtpResponse::class.java)
 
         // THEN
-        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(HttpStatus.CONFLICT, response.statusCode)
 
         assertFalse(response.body!!.success)
         assertEquals(ErrorCode.INVALID, response.body!!.error)
@@ -67,7 +67,7 @@ internal class VerifyEndpointTest {
         val response = rest.postForEntity("/otp/$uuid/verify", request, VerifyOtpResponse::class.java)
 
         // THEN
-        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(HttpStatus.CONFLICT, response.statusCode)
 
         // Make sure the OTP has been saved
         assertFalse(response.body!!.success)

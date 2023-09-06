@@ -5,6 +5,8 @@ import com.pragmaticnerdz.otp.dto.VerifyOtpRequest
 import com.pragmaticnerdz.otp.dto.VerifyOtpResponse
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,7 +26,7 @@ class VerifyEndpoint(
     fun verify(
         @PathVariable(name = "otp-uuid") uuid: String,
         @RequestBody request: VerifyOtpRequest,
-    ): VerifyOtpResponse {
+    ): ResponseEntity<VerifyOtpResponse> {
         val otp = db.findById(uuid)
 
         val response = if (otp.isEmpty) {
@@ -36,8 +38,15 @@ class VerifyEndpoint(
         }
 
         log(uuid, request, response)
-        return response
+        return toResponseEntity(response)
     }
+
+    private fun toResponseEntity(response: VerifyOtpResponse): ResponseEntity<VerifyOtpResponse> =
+        if (response.success) {
+            ResponseEntity.ok(response)
+        } else {
+            ResponseEntity.status(HttpStatus.CONFLICT).body(response)
+        }
 
     private fun log(uuid: String, request: VerifyOtpRequest, response: VerifyOtpResponse) {
         LOGGER.info("endpoint=/otp/$uuid/verify request_password=${request.password} response_success=${response.success} response_error=${response.error}")
