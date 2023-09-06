@@ -15,12 +15,11 @@ class MtnResource(
     private val consumerKey: String,
     private val consumerSecret: String,
     private val serviceCode: String,
+    private val rest: RestTemplate,
 ) : SmsSenderResource {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(MtnResource::class.java)
     }
-
-    private val rest = RestTemplate()
 
     override fun send(address: String, password: String): String {
         try {

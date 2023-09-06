@@ -52,6 +52,9 @@ jobs:
       - name: Deploy
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+          MTN_CONSUMER_KEY: ${{secrets.MTN_CONSUMER_KEY}}
+          MTN_CONSUMER_SECRET: ${{secrets.MTN_CONSUMER_SECRET}}
+          MTN_SERVICE_CODE: ${{secrets.MTN_SERVICE_CODE}}
           HEROKU_APP: otp-heroku-test
         run: |
           echo '>>> Creating Heroku app: ${HEROKU_APP}'
@@ -60,6 +63,9 @@ jobs:
           heroku buildpacks:add heroku/jvm --app ${HEROKU_APP}
           echo '>>> Setting up environment variables'
           heroku config:set --app ${HEROKU_APP} APP_PROFILE=test
+          heroku config:set --app ${HEROKU_APP} MTN_CONSUMER_KEY=${MTN_CONSUMER_KEY}
+          heroku config:set --app ${HEROKU_APP} MTN_CONSUMER_SECRET=${MTN_CONSUMER_SECRET}
+          heroku config:set --app ${HEROKU_APP} MTN_SERVICE_CODE=${MTN_SERVICE_CODE}
           export SERVER_URL=$(heroku apps:info -s --app ${HEROKU_APP} | grep web_url | cut -d= -f2)
           heroku config:set --app ${HEROKU_APP} SERVER_URL=${SERVER_URL}
           echo '>>> Installing Heroku adds-on'

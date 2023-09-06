@@ -51,4 +51,4 @@ This server is used for testing and educational purpose only.
     - We will whitelist your email address within 24 hours.
     - You'll receive a confirmation email to accept receiving email from the Mailgun.
 
-- SMS delivery is not supported yet :-(
+- SMS delivery doesn't work. The MTN account used is not production ready.

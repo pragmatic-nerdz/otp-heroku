@@ -11,3 +11,8 @@ otp:
     queue:
       rabbitmq:
         url: ${CLOUDAMQP_URL}
+    sms:
+      mtn:
+        consumer-key: ${MTN_CONSUMER_KEY}
+        consumer-secret: ${MTN_CONSUMER_SECRET}
+        service-code: ${MTN_SERVICE_CODE}

@@ -4,6 +4,7 @@ import com.pragmaticnerdz.otp.resource.sms.SmsSenderResource
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.client.RestTemplate
 
 @Configuration
 class MtnConfiguration(
@@ -14,5 +15,9 @@ class MtnConfiguration(
 ) {
     @Bean
     fun smsService(): SmsSenderResource =
-        MtnResource(hostname, consumerKey, consumerSecret, serviceCode)
+        MtnResource(hostname, consumerKey, consumerSecret, serviceCode, restTemplate())
+
+    @Bean
+    fun restTemplate(): RestTemplate =
+        RestTemplate()
 }
