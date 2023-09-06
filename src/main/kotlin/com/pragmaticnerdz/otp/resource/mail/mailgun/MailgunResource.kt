@@ -5,14 +5,10 @@ import com.mailgun.model.message.Message
 import com.pragmaticnerdz.otp.resource.mail.EmailSenderResource
 import feign.FeignException
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
-import java.net.URI
 
-@Service
 class MailgunResource(
     private val api: MailgunMessagesApi,
-    @Value("\${otp.server-url}") private val serverUrl: String,
+    private val domain: String,
 ) : EmailSenderResource {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(MailgunResource::class.java)
@@ -27,7 +23,7 @@ class MailgunResource(
                 .subject("Votre mot de passe")
                 .text(password)
                 .build()
-            api.sendMessage(URI(serverUrl).host, message)
+            api.sendMessage(domain, message)
         } catch (ex: Exception) {
             when (ex) {
                 is FeignException.TooManyRequests,

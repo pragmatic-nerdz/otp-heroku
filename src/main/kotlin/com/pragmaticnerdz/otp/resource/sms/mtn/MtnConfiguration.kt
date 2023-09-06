@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class MtnConfiguration {
     @Bean
-    fun smsService(): SmsSenderResource =
+    fun smsSenderResource(): SmsSenderResource =
         MtnResource()
 }
