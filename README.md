@@ -37,7 +37,7 @@ Browse the [API](http://localhost:8080/swagger-ui.html)
 
 # Testing the API
 
-Goto [API](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui)
+Goto to the [Swagger API](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html)
 
 **IMPORTANT NOTE**
 This server is used for testing and educational purpose only.

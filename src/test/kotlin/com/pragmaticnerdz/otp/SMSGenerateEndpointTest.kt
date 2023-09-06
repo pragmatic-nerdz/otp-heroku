@@ -36,5 +36,7 @@ internal class SMSGenerateEndpointTest {
         val uuid = response.body!!.otpUuid
         val otp = db.findById(uuid)
         assertTrue(otp.isPresent)
+
+        Thread.sleep(5000)
     }
 }

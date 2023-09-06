@@ -66,3 +66,9 @@ otp:
       mailgun:
         api-key: "---"
         domain: "localhost"
+    sms:
+      mtn:
+        hostname: "api.mtn.com"
+        consumer-key: "bM2L5TwCHBy5FP9ud5jsO7Ylr6d3HOV6"
+        consumer-secret: "gOFGlVND1u9OXRUb"
+        service-code: "11221"

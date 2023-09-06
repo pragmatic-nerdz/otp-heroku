@@ -1,5 +1,5 @@
 package com.pragmaticnerdz.otp.resource
 
 interface SenderResource {
-    fun send(address: String, password: String)
+    fun send(address: String, password: String): String
 }
