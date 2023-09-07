@@ -6,6 +6,4 @@ data class MtnOutboundSMSMessageRequest(
     val serviceCode: String,
     val senderAddress: String = "",
     val receiverAddress: List<String>,
-    val keyword: String = "",
-    val requestDeliveryReceipt: Boolean = false,
 )
