@@ -7,6 +7,8 @@ import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
 import com.pragmaticnerdz.otp.resource.mq.rabbitmq.RabbitMQConfiguration
 import com.pragmaticnerdz.otp.resource.persistence.OtpEntity
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,6 +19,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping
+@Tag(name = "generate")
 class GenerateEndpoint(
     private val db: OtpRepository,
     private val mq: RabbitTemplate,
@@ -26,6 +29,11 @@ class GenerateEndpoint(
     }
 
     @PostMapping("/otp")
+    @Operation(
+        method = "generate",
+        summary = "Generate an OTP",
+        description = "Generate a temporary password and send it via email or SMS",
+    )
     fun generate(@RequestBody request: GenerateOtpRequest): GenerateOtpResponse {
         val otp = generateOtp()
         passwordGenerated(request, otp)

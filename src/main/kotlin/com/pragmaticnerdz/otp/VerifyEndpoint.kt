@@ -4,6 +4,8 @@ import com.pragmaticnerdz.otp.dto.ErrorCode
 import com.pragmaticnerdz.otp.dto.VerifyOtpRequest
 import com.pragmaticnerdz.otp.dto.VerifyOtpResponse
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping
+@Tag(name = "verify")
 class VerifyEndpoint(
     private val db: OtpRepository,
 ) {
@@ -23,6 +26,11 @@ class VerifyEndpoint(
     }
 
     @PostMapping("/otp/{otp-uuid}/verify")
+    @Operation(
+        method = "verify",
+        summary = "Verify an OTP",
+        description = "Check if a temporary password is valid",
+    )
     fun verify(
         @PathVariable(name = "otp-uuid") uuid: String,
         @RequestBody request: VerifyOtpRequest,
