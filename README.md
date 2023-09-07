@@ -1,4 +1,4 @@
-[![](https://github.com/pragmatic-nerdz/otp-heroku/workflows/otp-heroku-master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/workflows/otp-heroku-master.yml)
+[![](https://github.com/pragmatic-nerdz/otp-heroku/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/workflows/master.yml)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
 ![](https://img.shields.io/badge/language-kotlin-brightgreen.svg)

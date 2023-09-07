@@ -11,8 +11,8 @@ class SenderConsumer(
     private val emailResource: EmailSenderResource,
     private val smsResource: SmsSenderResource,
 ) {
-    fun send(type: OtpType, address: String, password: String): String? {
-        return getSenderResource(type).send(address, password)
+    fun send(type: OtpType, uuid: String, address: String, password: String) {
+        getSenderResource(type).send(uuid, address, password)
     }
 
     private fun getSenderResource(type: OtpType): SenderResource {

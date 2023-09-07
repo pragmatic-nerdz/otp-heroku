@@ -47,6 +47,7 @@ class GenerateEndpoint(
     private fun passwordGenerated(request: GenerateOtpRequest, otp: OtpEntity) {
         val event = PasswordGeneratedEvent(
             type = request.type,
+            uuid = otp.uuid,
             address = request.address,
             password = formatPassword(otp.password, 6),
         )

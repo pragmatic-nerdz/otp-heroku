@@ -1,14 +1,13 @@
 package com.pragmaticnerdz.otp.resource.sms.mtn
 
 import com.pragmaticnerdz.otp.resource.sms.SmsSenderResource
+import com.pragmaticnerdz.otp.resource.sms.mtn.dto.MtnOutboundSMSMessageRequest
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
-import java.util.UUID
 
 class MtnResource(
     private val hostnane: String,
@@ -21,13 +20,12 @@ class MtnResource(
         private val LOGGER = LoggerFactory.getLogger(MtnResource::class.java)
     }
 
-    override fun send(address: String, password: String): String {
+    override fun send(uuid: String, address: String, password: String) {
         try {
             val accessToken = login()
-            return outbound(address, password, accessToken)
+            outbound(uuid, address, password, accessToken)
         } catch (ex: Exception) {
             LOGGER.warn("Ignoring SMS error", ex)
-            return "-"
         }
     }
 
@@ -47,7 +45,7 @@ class MtnResource(
         // Post
         val response = rest.postForEntity(
             "https://$hostnane/v1/oauth/access_token?grant_type=client_credentials",
-            HttpEntity<MultiValueMap<String, String>>(data, headers),
+            HttpEntity(data, headers),
             Any::class.java,
         ).body as Map<String, Any>
 
@@ -57,26 +55,24 @@ class MtnResource(
     /**
      * https://developers.mtn.com/products/sms-v3-api
      */
-    private fun outbound(address: String, password: String, accessToken: String): String {
+    private fun outbound(uuid: String, address: String, password: String, accessToken: String): String {
         // Payload
-        val request = LinkedMultiValueMap<String, Any>()
-        request["message"] = password
-        request["clientCorrelatorId"] = UUID.randomUUID().toString()
-        request["serviceCode"] = serviceCode
-        request["senderAddress"] = "MTN"
-        request["receiverAddress"] = listOf(address)
-        request["keyword"] = ""
-        request["requestDeliveryReceipt"] = "false"
+        val request = MtnOutboundSMSMessageRequest(
+            message = password,
+            clientCorrelatorId = uuid,
+            serviceCode = serviceCode,
+            receiverAddress = listOf(address),
+        )
 
         // Headers
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
-        headers.add("Authorization", accessToken)
+        headers.add("Authorization", "Bearer $accessToken")
 
         // Post
         val response = rest.postForEntity(
             "https://$hostnane/v3/sms/messages/sms/outbound",
-            HttpEntity<MultiValueMap<String, Any>>(request, headers),
+            HttpEntity(request, headers),
             Any::class.java,
         ).body as Map<String, Any>
 

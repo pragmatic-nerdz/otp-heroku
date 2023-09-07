@@ -45,6 +45,6 @@ class RabbitMQConfiguration(
     fun onPasswordGenerated(payload: String) {
         val mapper = ObjectMapper()
         val event = mapper.readValue(payload, PasswordGeneratedEvent::class.java)
-        sender.send(event.type, event.address, event.password)
+        sender.send(event.type, event.uuid, event.address, event.password)
     }
 }

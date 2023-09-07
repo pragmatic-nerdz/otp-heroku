@@ -9,14 +9,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import java.util.UUID
 import kotlin.test.assertFalse
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-internal class VerifyEndpointTest {
+internal class VerifyEndpointTest : AbstractIntegrationTest() {
     @Autowired
     private lateinit var rest: TestRestTemplate
 

@@ -14,7 +14,7 @@ class MailgunResource(
         private val LOGGER = LoggerFactory.getLogger(MailgunResource::class.java)
     }
 
-    override fun send(address: String, password: String): String {
+    override fun send(uuid: String, address: String, password: String) {
         try {
             val message = Message.builder()
                 .from("pragmatic.nerdz@gmail.com")
@@ -22,7 +22,7 @@ class MailgunResource(
                 .subject("Votre mot de passe")
                 .text(password)
                 .build()
-            return api.sendMessage(domain, message).id
+            api.sendMessage(domain, message)
         } catch (ex: Exception) {
             when (ex) {
                 is FeignException.TooManyRequests,
@@ -30,7 +30,6 @@ class MailgunResource(
                 is FeignException.Forbidden,
                 -> {
                     LOGGER.warn("Email server no longer available", ex)
-                    return "-"
                 }
                 else -> throw ex
             }
