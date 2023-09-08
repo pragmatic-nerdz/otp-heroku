@@ -36,7 +36,6 @@ class VerifyEndpoint(
         @RequestBody request: VerifyOtpRequest,
     ): ResponseEntity<VerifyOtpResponse> {
         try {
-
             val otp = db.findById(uuid)
 
             val response = if (otp.isEmpty) {
@@ -49,7 +48,6 @@ class VerifyEndpoint(
 
             log(uuid, request, response)
             return toResponseEntity(response)
-
         } catch (ex: Exception) {
             return logAndThrow(uuid, request, ex)
         }
