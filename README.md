@@ -1,3 +1,5 @@
+# OTP Heroku
+
 [![master](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
@@ -8,52 +10,59 @@
 [![JDK](https://img.shields.io/badge/redis-blue.svg)](https://redis.io/)
 [![JDK](https://img.shields.io/badge/rabbitmq-blue.svg)](https://www.rabbitmq.com/)
 
-This is the project is based on the following blog posts:
+OTP-Heroku is a sample API created using the [12-Factor-App](https://12factor.net/) methodology.
 
-- [Conception d'un systeme de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
+The design of this API has been documented in the
+following [blog post](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud) (
+in french)
 
-----
+# Get Started
 
-# Setup your local environment
+## Pre-requisites
 
-### Installations
+To build the API, you must install the following softwares:
 
 - Install [Maven](https://maven.apache.org/install.html)
 - Install [Redis](https://redis.io/docs/getting-started/installation/)
 - Install [RabbitMQ](https://www.rabbitmq.com/download.html)
 
-### Build
+## Build and Run
 
 ```
 mvn clean install
-```
-
-### Run the server
-
-```
 mvn spring-boot:run
 ```
 
-Browse the [API](http://localhost:8080/swagger-ui.html)
+# Use th eonline API
 
-----
-
-# Testing the API
-
-Goto to the [Swagger API](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html) to test the different API
-endpoints.
-
-**IMPORTANT NOTE**
+## IMPORTANT NOTES
 
 This server is used for testing and educational purpose only.
 
-- We are using [Mailgun](https://www.mailgun.com/) API sandbox for sending emails. This Mailgun sandbox delivers
-  emails *only* to addresses that have been whitelisted.
+### Email
 
-  To whitelist the email address you'll like to use for testing the API:
-    - Create a [new issue](https://github.com/pragmatic-nerdz/otp-heroku/issues/new) containing the email address you
-      want to whitelist
-    - We will whitelist your email address within 24 hours.
-    - You'll receive a confirmation email to accept receiving email from the Mailgun.
+We are using [Mailgun](https://www.mailgun.com/) as mail server for email delivery. This server sends emails *only* to
+addresses that have been whitelisted.
 
-- SMS delivery doesn't work. The MTN account used is not production ready.
+To whitelist a email address you'll like to use for testing the API:
+
+- Create a [new issue](https://github.com/pragmatic-nerdz/otp-heroku/issues/new) containing the email address you want
+  to whitelist
+- We will whitelist your email address within 24 hours.
+- You'll receive a confirmation email to accept receiving email from the Mailgun.
+
+### SMS
+
+We are using [MTN SMS](https://developers.mtn.com/products/sms-v3-api) for SMS delivery. But SMS delivery doesn't work
+because the account we are using is not production ready.
+
+## Use the API
+
+- Goto to the online [API playgoung](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html)
+
+**IMPORTANT NOTE**
+
+# Links
+
+- [Conception d'un systeme de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
+- [Guide simplifié des Twelve-Factor-Apps.](https://www.wutsi.com/read/63900/guide-simplifie-des-twelve-factor-apps)
