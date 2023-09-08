@@ -2,7 +2,7 @@ package com.pragmaticnerdz.otp.resource.mq.rabbitmq
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.pragmaticnerdz.otp.SenderConsumer
-import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
+import com.pragmaticnerdz.otp.dto.PasswordGeneratedEvent
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
@@ -45,6 +45,6 @@ class RabbitMQConfiguration(
     fun onPasswordGenerated(payload: String) {
         val mapper = ObjectMapper()
         val event = mapper.readValue(payload, PasswordGeneratedEvent::class.java)
-        sender.send(event.type, event.uuid, event.address, event.password)
+        sender.send(event)
     }
 }

@@ -1,6 +1,4 @@
-package com.pragmaticnerdz.otp.resource.mq
-
-import com.pragmaticnerdz.otp.dto.OtpType
+package com.pragmaticnerdz.otp.dto
 
 data class PasswordGeneratedEvent(
     val type: OtpType = OtpType.EMAIL,

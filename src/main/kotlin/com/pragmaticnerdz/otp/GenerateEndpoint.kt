@@ -3,7 +3,7 @@ package com.pragmaticnerdz.otp
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.pragmaticnerdz.otp.dto.GenerateOtpRequest
 import com.pragmaticnerdz.otp.dto.GenerateOtpResponse
-import com.pragmaticnerdz.otp.resource.mq.PasswordGeneratedEvent
+import com.pragmaticnerdz.otp.dto.PasswordGeneratedEvent
 import com.pragmaticnerdz.otp.resource.mq.rabbitmq.RabbitMQConfiguration
 import com.pragmaticnerdz.otp.resource.persistence.OtpEntity
 import com.pragmaticnerdz.otp.resource.persistence.OtpRepository
@@ -35,13 +35,16 @@ class GenerateEndpoint(
         description = "Generate a temporary password and send it via email or SMS",
     )
     fun generate(@RequestBody request: GenerateOtpRequest): GenerateOtpResponse {
-        val otp = generateOtp()
-        passwordGenerated(request, otp)
+        try {
+            val otp = generateOtp()
+            passwordGenerated(request, otp)
 
-        val response = GenerateOtpResponse(otpUuid = otp.uuid)
-
-        log(request, response)
-        return response
+            val response = GenerateOtpResponse(otpUuid = otp.uuid)
+            log(request, response)
+            return response
+        } catch (ex: Exception) {
+            return logAndThrow(request, ex)
+        }
     }
 
     private fun generateOtp() =
@@ -76,6 +79,11 @@ class GenerateEndpoint(
     }
 
     private fun log(request: GenerateOtpRequest, response: GenerateOtpResponse) {
-        LOGGER.info("endpoint=/otp request_address=${request.address} request_type=${request.type} response_otp_uuid=${response.otpUuid}")
+        LOGGER.info("request_address=${request.address} request_type=${request.type} response_otp_uuid=${response.otpUuid}")
+    }
+
+    private fun logAndThrow(request: GenerateOtpRequest, ex: Throwable): GenerateOtpResponse {
+        LOGGER.error("request_address=${request.address} request_type=${request.type}", ex)
+        throw ex
     }
 }

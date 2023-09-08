@@ -35,18 +35,24 @@ class VerifyEndpoint(
         @PathVariable(name = "otp-uuid") uuid: String,
         @RequestBody request: VerifyOtpRequest,
     ): ResponseEntity<VerifyOtpResponse> {
-        val otp = db.findById(uuid)
+        try {
 
-        val response = if (otp.isEmpty) {
-            VerifyOtpResponse(success = false, error = ErrorCode.EXPIRED)
-        } else if (otp.get().password != request.password) {
-            VerifyOtpResponse(success = false, error = ErrorCode.INVALID)
-        } else {
-            VerifyOtpResponse(success = true)
+            val otp = db.findById(uuid)
+
+            val response = if (otp.isEmpty) {
+                VerifyOtpResponse(success = false, error = ErrorCode.EXPIRED)
+            } else if (otp.get().password != request.password) {
+                VerifyOtpResponse(success = false, error = ErrorCode.INVALID)
+            } else {
+                VerifyOtpResponse(success = true)
+            }
+
+            log(uuid, request, response)
+            return toResponseEntity(response)
+
+        } catch (ex: Exception) {
+            return logAndThrow(uuid, request, ex)
         }
-
-        log(uuid, request, response)
-        return toResponseEntity(response)
     }
 
     private fun toResponseEntity(response: VerifyOtpResponse): ResponseEntity<VerifyOtpResponse> =
@@ -57,6 +63,11 @@ class VerifyEndpoint(
         }
 
     private fun log(uuid: String, request: VerifyOtpRequest, response: VerifyOtpResponse) {
-        LOGGER.info("endpoint=/otp/$uuid/verify request_password=${request.password} response_success=${response.success} response_error=${response.error}")
+        LOGGER.info("request_uuid=$uuid request_password=${request.password} response_success=${response.success} response_error=${response.error}")
+    }
+
+    private fun logAndThrow(uuid: String, request: VerifyOtpRequest, ex: Throwable): ResponseEntity<VerifyOtpResponse> {
+        LOGGER.error("request_uuid=$uuid request_password=${request.password}", ex)
+        throw ex
     }
 }

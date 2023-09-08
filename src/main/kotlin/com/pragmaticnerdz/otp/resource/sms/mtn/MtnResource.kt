@@ -20,12 +20,13 @@ class MtnResource(
         private val LOGGER = LoggerFactory.getLogger(MtnResource::class.java)
     }
 
-    override fun send(uuid: String, address: String, password: String) {
-        try {
+    override fun send(uuid: String, address: String, password: String): String {
+        return try {
             val accessToken = login()
             outbound(uuid, address, password, accessToken)
         } catch (ex: Exception) {
             LOGGER.warn("Ignoring SMS error", ex)
+            "-"
         }
     }
 

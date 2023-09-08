@@ -2,8 +2,10 @@ package com.pragmaticnerdz.otp.resource.mail.mailgun
 
 import com.mailgun.api.v3.MailgunMessagesApi
 import com.mailgun.model.message.Message
+import com.mailgun.model.message.MessageResponse
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -31,6 +33,10 @@ internal class MailgunResourceTest : AbstractIntegrationTest() {
 
     @Test
     fun send() {
+        // GIVEN
+        val response = MessageResponse.builder().id("1111").build()
+        doReturn(response).whenever(api).sendMessage(any(), any())
+
         // WHEN
         resource.send(UUID.randomUUID().toString(), "roger.milla@gmail.com", "123456")
 

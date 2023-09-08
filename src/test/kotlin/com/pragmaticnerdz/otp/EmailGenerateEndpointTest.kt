@@ -2,6 +2,7 @@ package com.pragmaticnerdz.otp
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.times
@@ -37,6 +38,9 @@ internal class EmailGenerateEndpointTest : AbstractIntegrationTest() {
 
     @Test
     fun `generated OTP is set via email`() {
+        // GIVEN
+        doReturn("1111").whenever(emailSenderResource).send(any(), any(), any())
+
         // WHEN
         val response = rest.postForEntity("/otp", request, GenerateOtpResponse::class.java)
 
@@ -59,7 +63,7 @@ internal class EmailGenerateEndpointTest : AbstractIntegrationTest() {
     fun `password is resent on delivery failure`() {
         // GIVEN
         doThrow(RuntimeException::class)
-            .doNothing()
+            .doReturn("22222")
             .whenever(emailSenderResource).send(any(), any(), any())
 
         // WHEN
