@@ -9,6 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # -------------- SETUP ------------------------
+    #
+    # Setup the services needed by the application
+    #  - redis
+    #  - rabbitmq
+    #
+    # ---------------------------------------------
     services:
       redis:
         image: redis
@@ -26,9 +33,13 @@ jobs:
           - 5672:5672
 
     steps:
-      # Setup the environment
-      #  - Setup JDK 17
-      #  - Setup Heroku CLI
+      # -------------- SETUP ------------------------
+      #
+      # Setup the build environment by installing
+      #  - JDK 17: For building the app
+      #  - Heroku CLI: For releasing the app
+      #
+      # ---------------------------------------------
       - uses: actions/checkout@v3
       - name: Setup JDK
         uses: actions/setup-java@v3
@@ -41,15 +52,28 @@ jobs:
           curl https://cli-assets.heroku.com/install.sh | sh
           heroku plugins:install @heroku-cli/plugin-java
 
-      # Build step: Build the application. This step produces the artifact target/otp-heroku.jar
+
+      # --------------------- BUILD --------------------------------------
+      #
+      # Build the application.
+      # This step produces will the artifact target/otp-heroku.jar
+      #
+      # ------------------------------------------------------------------
       - name: Build
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           mvn install
 
-      # Deploy step: Deploys the application to Heroku
-      - name: Deploy
+
+      # --------------------- RELEASE --------------------------------------
+      #
+      # Deploys the target/otp-heroku.jar to Heroku
+      # Setup environment variables
+      # Install the addons needed by the application
+      #
+      # ------------------------------------------------------------------
+      - name: Release
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
           MTN_CONSUMER_KEY: ${{secrets.MTN_CONSUMER_KEY}}
