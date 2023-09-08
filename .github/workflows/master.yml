@@ -9,13 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # -------------- SETUP ------------------------
+    # -------------- SETUP --------------------------------------------------------
     #
-    # Setup the services needed by the application
+    # Installing services needed to build the app
     #  - redis
     #  - rabbitmq
     #
-    # ---------------------------------------------
+    # -----------------------------------------------------------------------------
     services:
       redis:
         image: redis
@@ -33,13 +33,14 @@ jobs:
           - 5672:5672
 
     steps:
-      # -------------- SETUP ------------------------
+      # --------------------- BUILD -----------------------------------------------------------
       #
-      # Setup the build environment by installing
-      #  - JDK 17: For building the app
-      #  - Heroku CLI: For releasing the app
+      # Build the app:
+      #  - Checkout the code
+      #  - Install JDK
+      #  - Build the code using Maven, which will product the artifact target/otp-heroku.jar
       #
-      # ---------------------------------------------
+      # ---------------------------------------------------------------------------------------
       - uses: actions/checkout@v3
       - name: Setup JDK
         uses: actions/setup-java@v3
@@ -47,18 +48,6 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
-      - name: Setup Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-          heroku plugins:install @heroku-cli/plugin-java
-
-
-      # --------------------- BUILD --------------------------------------
-      #
-      # Build the application.
-      # This step produces will the artifact target/otp-heroku.jar
-      #
-      # ------------------------------------------------------------------
       - name: Build
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -66,13 +55,23 @@ jobs:
           mvn install
 
 
-      # --------------------- RELEASE --------------------------------------
+      # --------------------- RELEASE ------------------------------------------------------------
       #
-      # Deploys the target/otp-heroku.jar to Heroku
-      # Setup environment variables
-      # Install the addons needed by the application
+      # Deploys the app to Heroku
+      #  - Install Heroku CLI
+      #  - Use Heroku CLI to perform the release:
+      #      - create the heroku application
+      #      - Setup the environment variables
+      #      - Install the application add-ons
+      #      - Deploy target/otp-heroku.jar
       #
-      # ------------------------------------------------------------------
+      # ------------------------------------------------------------------------------------------
+      - name: Setup Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku plugins:install @heroku-cli/plugin-java
+
+
       - name: Release
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
