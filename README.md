@@ -1,9 +1,10 @@
-[![](https://github.com/pragmatic-nerdz/otp-heroku/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/workflows/master.yml)
+[![master](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
 ![](https://img.shields.io/badge/language-kotlin-brightgreen.svg)
 
 [![spring3](https://img.shields.io/badge/springboot-3.x-blue.svg)](https://spring.io/projects/spring-boot)
+[![JDK](https://img.shields.io/badge/maven-blue.svg)](https://maven.apache.org/)
 [![JDK](https://img.shields.io/badge/redis-blue.svg)](https://redis.io/)
 [![JDK](https://img.shields.io/badge/rabbitmq-blue.svg)](https://www.rabbitmq.com/)
 
@@ -11,21 +12,23 @@ This is the project is based on the following blog posts:
 
 - [Conception d'un systeme de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
 
+----
+
 # Setup your local environment
 
-## Installations
+### Installations
 
 - Install [Maven](https://maven.apache.org/install.html)
 - Install [Redis](https://redis.io/docs/getting-started/installation/)
 - Install [RabbitMQ](https://www.rabbitmq.com/download.html)
 
-## Build
+### Build
 
 ```
 mvn clean install
 ```
 
-## Run the server
+### Run the server
 
 ```
 mvn spring-boot:run
@@ -37,9 +40,11 @@ Browse the [API](http://localhost:8080/swagger-ui.html)
 
 # Testing the API
 
-Goto to the [Swagger API](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html)
+Goto to the [Swagger API](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html) to test the different API
+endpoints.
 
 **IMPORTANT NOTE**
+
 This server is used for testing and educational purpose only.
 
 - We are using [Mailgun](https://www.mailgun.com/) API sandbox for sending emails. This Mailgun sandbox delivers
