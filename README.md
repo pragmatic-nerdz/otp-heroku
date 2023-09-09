@@ -3,9 +3,9 @@
 [![master](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
-![](https://img.shields.io/badge/language-kotlin-brightgreen.svg)
+[![spring3](https://img.shields.io/badge/springboot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+![](https://img.shields.io/badge/kotlin-brightgreen.svg)
 
-[![spring3](https://img.shields.io/badge/springboot-3.x-blue.svg)](https://spring.io/projects/spring-boot)
 [![JDK](https://img.shields.io/badge/maven-blue.svg)](https://maven.apache.org/)
 [![JDK](https://img.shields.io/badge/redis-blue.svg)](https://redis.io/)
 [![JDK](https://img.shields.io/badge/rabbitmq-blue.svg)](https://www.rabbitmq.com/)
@@ -33,7 +33,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-# Use th eonline API
+# Use the online API
 
 ## IMPORTANT NOTES
 
@@ -58,11 +58,9 @@ because the account we are using is not production ready.
 
 ## Use the API
 
-- Goto to the online [API playgoung](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html)
-
-**IMPORTANT NOTE**
+- Goto to the online [API playgoung](https://otp-heroku-test-0ba93376585a.herokuapp.com/swagger-ui.html) on Heroku
 
 # Links
 
-- [Conception d'un systeme de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
+- [Conception d'un système de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
 - [Guide simplifié des Twelve-Factor-Apps.](https://www.wutsi.com/read/63900/guide-simplifie-des-twelve-factor-apps)
