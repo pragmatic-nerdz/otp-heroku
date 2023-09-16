@@ -31,9 +31,9 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-# Use the online API
+# Test the API on Heroku
 
-## IMPORTANT NOTES
+## Important Notice
 
 This server is used for testing and educational purpose only.
 
