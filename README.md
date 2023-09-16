@@ -1,6 +1,7 @@
 # OTP Heroku
 
 [![master](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml)
+[![pull request](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/pull_request.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/pull_request.yml)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
 [![spring3](https://img.shields.io/badge/springboot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)

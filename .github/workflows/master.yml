@@ -39,6 +39,7 @@ jobs:
       #  - Checkout the code
       #  - Install JDK
       #  - Build the code using Maven, which will product the artifact target/otp-heroku.jar
+      #  - Push code coverage to CodeCov
       #
       # ---------------------------------------------------------------------------------------
       - uses: actions/checkout@v3
@@ -54,6 +55,12 @@ jobs:
         run: |
           mvn install
 
+      - uses: codecov/codecov-action@v3
+        name: Code Coverage
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          verbose: true
 
       # --------------------- RELEASE ------------------------------------------------------------
       #
