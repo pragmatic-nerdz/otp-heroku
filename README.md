@@ -62,3 +62,4 @@ because the account we are using is not production ready.
 
 - [Conception d'un système de gestion de One Time Password sur le Cloud](https://www.wutsi.com/read/65042/conception-d-un-systeme-de-gestion-de-one-time-password-sur-le-cloud)
 - [Guide simplifié des Twelve-Factor-Apps.](https://www.wutsi.com/read/63900/guide-simplifie-des-twelve-factor-apps)
+- [Comment créer une Twelve-Factor-App avec Spring Boot, Heroku et Github](https://www.wutsi.com/read/65387/comment-creer-une-twelve-factor-app-avec-spring-boot-heroku-et-github)
