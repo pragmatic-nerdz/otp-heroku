@@ -20,8 +20,8 @@
         <kotlin.code.style>official</kotlin.code.style>
         <jdk.version>17</jdk.version>
 
-        <jacoco.threshold.line>0.93</jacoco.threshold.line>
-        <jacoco.threshold.class>0.93</jacoco.threshold.class>
+        <jacoco.threshold.line>0.98</jacoco.threshold.line>
+        <jacoco.threshold.class>0.98</jacoco.threshold.class>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -232,7 +232,11 @@
                 </executions>
             </plugin>
 
-            <!-- Code Coverage -->
+            <!-- ========================================================= -->
+            <!-- plugin: jacoco                                            -->
+            <!--  - Generate the code coverage                             -->
+            <!--  - Make sure that the coverage threshold is met           -->
+            <!-- ========================================================= -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -260,7 +264,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/config/*</exclude>
+                        <exclude>**/*Configuration*</exclude>
                         <exclude>**/Application*</exclude>
                     </excludes>
                     <rules>
@@ -280,13 +284,13 @@
                             </limits>
                         </rule>
                     </rules>
-                    <excludes>
-                        <exclude>**/*Configuration*</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
-            <!-- Linter -->
+            <!-- ========================================================= -->
+            <!-- plugin: klint                                             -->
+            <!--  - perform code linting                                   -->
+            <!-- ========================================================= -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
