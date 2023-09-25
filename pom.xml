@@ -20,8 +20,8 @@
         <kotlin.code.style>official</kotlin.code.style>
         <jdk.version>17</jdk.version>
 
-        <jacoco.threshold.line>0.96</jacoco.threshold.line>
-        <jacoco.threshold.class>0.96</jacoco.threshold.class>
+        <jacoco.threshold.line>0.98</jacoco.threshold.line>
+        <jacoco.threshold.class>0.98</jacoco.threshold.class>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -264,7 +264,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/config/*</exclude>
+                        <exclude>**/*Configuration*</exclude>
                         <exclude>**/Application*</exclude>
                     </excludes>
                     <rules>
@@ -284,10 +284,6 @@
                             </limits>
                         </rule>
                     </rules>
-                    <excludes>
-                        <exclude>**/Application*</exclude>
-                        <exclude>**/*Configuration*</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
