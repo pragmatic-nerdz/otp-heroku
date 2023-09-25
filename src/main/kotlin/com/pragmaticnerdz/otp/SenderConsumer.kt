@@ -18,12 +18,8 @@ class SenderConsumer(
     }
 
     fun send(event: PasswordGeneratedEvent) {
-        try {
-            val messageId = getSenderResource(event.type).send(event.uuid, event.address, event.password)
-            log(event, messageId)
-        } catch (ex: Exception) {
-            logAndThrow(event, ex)
-        }
+        val messageId = getSenderResource(event.type).send(event.uuid, event.address, event.password)
+        log(event, messageId)
     }
 
     private fun getSenderResource(type: OtpType): SenderResource {
@@ -35,13 +31,5 @@ class SenderConsumer(
 
     private fun log(event: PasswordGeneratedEvent, messageId: String) {
         LOGGER.info("event_uuid=${event.uuid} event_type=${event.type} event_address=${event.address} event_password=${event.password} message_id=$messageId")
-    }
-
-    private fun logAndThrow(event: PasswordGeneratedEvent, ex: Exception) {
-        LOGGER.error(
-            "event_uuid=${event.uuid} event_type=${event.type} event_address=${event.address} event_password=${event.password}",
-            ex,
-        )
-        throw ex
     }
 }

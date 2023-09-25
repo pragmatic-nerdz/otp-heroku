@@ -35,16 +35,12 @@ class GenerateEndpoint(
         description = "Generate a temporary password and send it via email or SMS",
     )
     fun generate(@RequestBody request: GenerateOtpRequest): GenerateOtpResponse {
-        try {
-            val otp = generateOtp()
-            passwordGenerated(request, otp)
+        val otp = generateOtp()
+        passwordGenerated(request, otp)
 
-            val response = GenerateOtpResponse(otpUuid = otp.uuid)
-            log(request, response)
-            return response
-        } catch (ex: Exception) {
-            return logAndThrow(request, ex)
-        }
+        val response = GenerateOtpResponse(otpUuid = otp.uuid)
+        log(request, response)
+        return response
     }
 
     private fun generateOtp() =
@@ -80,10 +76,5 @@ class GenerateEndpoint(
 
     private fun log(request: GenerateOtpRequest, response: GenerateOtpResponse) {
         LOGGER.info("request_address=${request.address} request_type=${request.type} response_otp_uuid=${response.otpUuid}")
-    }
-
-    private fun logAndThrow(request: GenerateOtpRequest, ex: Throwable): GenerateOtpResponse {
-        LOGGER.error("request_address=${request.address} request_type=${request.type}", ex)
-        throw ex
     }
 }
