@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # -------------- SETUP --------------------------------------------------------
+    # -- SETUP --------------------------------------------------------------------
     #
-    # Installing services needed to build the app
+    # Setup the services needed to build the app
     #  - redis
     #  - rabbitmq
     #
@@ -27,22 +27,24 @@ jobs:
           --health-retries 5
         ports:
           - 6379:6379
+
       rabbitmq:
         image: rabbitmq
         ports:
           - 5672:5672
 
     steps:
-      # --------------------- BUILD -----------------------------------------------------------
+      # -- BUILD -------------------------------------------------------------------------------
       #
       # Build the app:
       #  - Checkout the code
       #  - Install JDK
-      #  - Build the code using Maven, which will product the artifact target/otp-heroku.jar
+      #  - Build the code using Maven and generate the artifact target/otp-heroku.jar
       #  - Push code coverage to CodeCov
       #
       # ---------------------------------------------------------------------------------------
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
@@ -62,7 +64,7 @@ jobs:
           fail_ci_if_error: false
           verbose: true
 
-      # --------------------- RELEASE ------------------------------------------------------------
+      # -- RELEASE --------------------------------------------------------------------------------
       #
       # Deploys the app to Heroku
       #  - Install Heroku CLI
