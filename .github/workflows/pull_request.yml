@@ -7,18 +7,39 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # -- SETUP --------------------------------------------------------------------
+    #
+    # Setup the services needed to build the app
+    #  - redis
+    #  - rabbitmq
+    #
+    # -----------------------------------------------------------------------------
     services:
-      mysql:
-        image: mysql:8.1
-        env:
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: admin
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: wutsi
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
-          - 3306:3306
+          - 6379:6379
+
+      rabbitmq:
+        image: rabbitmq
+        ports:
+          - 5672:5672
 
     steps:
+      # -- BUILD -------------------------------------------------------------------------------
+      #
+      # Build the app:
+      #  - Checkout the code
+      #  - Install JDK
+      #  - Build the code using Maven
+      #
+      # ---------------------------------------------------------------------------------------
       - uses: actions/checkout@v4
 
       - name: JDK
@@ -27,18 +48,9 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
-      - name: Init DB
-        run: |
-          mysql -v --host 127.0.0.1 -uroot -proot -e "SHOW DATABASES" || sleep 30 || mysql -v --host 127.0.0.1 -uroot -proot -e "SHOW DATABASES"
-          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE checkout;"
-          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE marketplace;"
-          mysql --host 127.0.0.1 -uroot -proot -e "CREATE DATABASE membership;"
-
       - name: Build
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          mvn -s settings.xml validate
-          mvn -q -s settings.xml --non-recursive install
-          mvn -Dspring.datasource.username=root -Dspring.datasource.password=root -Dheadless=true -T1C -q -s settings.xml --fail-at-end package
+          mvn package
 
