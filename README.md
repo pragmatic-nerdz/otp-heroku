@@ -2,7 +2,7 @@
 
 [![master](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/master.yml)
 [![pull request](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/pull_request.yml/badge.svg)](https://github.com/pragmatic-nerdz/otp-heroku/actions/workflows/pull_request.yml)
-[![codecov](https://codecov.io/gh/pragmatic-nerdz/otp-heroku/graph/badge.svg?token=BK0K4DPDAY)](https://codecov.io/gh/pragmatic-nerdz/otp-heroku)
+[![codecov](https://codecov.io/gh/pragmatic-nerdz/otp-heroku/settings/badge.svg)](https://codecov.io/gh/pragmatic-nerdz/otp-heroku)
 
 [![JDK](https://img.shields.io/badge/jdk-17-brightgreen.svg)](https://jdk.java.net/17/)
 [![spring3](https://img.shields.io/badge/springboot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
